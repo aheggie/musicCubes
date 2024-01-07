@@ -37,9 +37,13 @@ const boxMaker = (color) => {
 
 const randSingleColorHex = (start = 0, end = 255) =>
   randBetween(start, end).toString(16).padStart(2, "0");
+console.log(randSingleColorHex());
+const hexCode = (rHex, gHex, bHex) => `#${rHex}${gHex}${bHex}`;
+console.log(hexCode(...["af", "22", "bc"]));
 
 const randHexCode = () =>
-  `#${randSingleColorHex()}${randSingleColorHex()}${randSingleColorHex()}`;
+  hexCode(...emptyArray(3).map((_) => randSingleColorHex()));
+console.log(randHexCode());
 
 //Mesh
 
