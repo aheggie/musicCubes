@@ -9,8 +9,20 @@ const scene = new THREE.Scene();
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: "#FF6F00" });
 const mesh = new THREE.Mesh(geometry, material);
-mesh.scale.x = 2;
+
+// mesh.position.z = 3;
+
 scene.add(mesh);
+
+//MeshTwo
+
+const meshTwo = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: "#31A6FF" })
+);
+
+meshTwo.position.y = 2;
+scene.add(meshTwo);
 //Camera
 
 const aspect = {
@@ -31,20 +43,20 @@ const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(aspect.width, aspect.height);
 renderer.render(scene, camera);
 
-const randShift = (position, grain = 0.01) =>
-  position + (0.5 - Math.random()) * grain;
+// const randShift = (position, grain = 0.01) =>
+//   position + (0.5 - Math.random()) * grain;
 
-let bias = 0.01;
-setInterval(() => {
-  mesh.rotation.x = bias + randShift(mesh.rotation.x);
-  mesh.position.x = bias + randShift(mesh.position.x);
-  mesh.rotation.y = bias + randShift(mesh.rotation.y);
-  mesh.position.y = bias + randShift(mesh.position.y);
-  mesh.rotation.z = bias + randShift(mesh.rotation.z);
-  mesh.position.z = bias + randShift(mesh.position.z);
-  bias = randShift(bias);
-  renderer.render(scene, camera);
-}, 100);
+// let bias = 0.01;
+// setInterval(() => {
+//   mesh.rotation.x = bias + randShift(mesh.rotation.x);
+//   mesh.position.x = bias + randShift(mesh.position.x);
+//   mesh.rotation.y = bias + randShift(mesh.rotation.y);
+//   mesh.position.y = bias + randShift(mesh.position.y);
+//   mesh.rotation.z = bias + randShift(mesh.rotation.z);
+//   mesh.position.z = bias + randShift(mesh.position.z);
+//   bias = randShift(bias);
+//   renderer.render(scene, camera);
+// }, 100);
 // //Mesh
 
 // const cube = new THREE.Mesh(
