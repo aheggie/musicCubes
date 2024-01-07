@@ -25,13 +25,20 @@ const randSingleColorHex = () => randBetween().toString(16).padStart(2, "0");
 const randHexCode = () =>
   `#${randSingleColorHex()}${randSingleColorHex()}${randSingleColorHex()}`;
 
+// empty array of len x
+
+const emptyArray = (len) => [...new Array(len)];
+
 //Mesh
 
 // const meshes = ["#FF6F00", "#31A6FF", "#FABBAE", "#FAADED", "#4B1DAD"].map(
 //   boxMaker
 // );
 
-const meshes = [randHexCode(), randHexCode(), randHexCode()].map(boxMaker);
+const boxArrayMaker = (nBoxes) =>
+  emptyArray(nBoxes).map(randHexCode).map(boxMaker);
+
+const meshes = boxArrayMaker(100);
 
 meshes.forEach((mesh) => scene.add(mesh));
 
