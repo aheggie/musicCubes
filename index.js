@@ -6,7 +6,7 @@ const scene = new THREE.Scene();
 
 //Group
 
-const group = new THREE.Group();
+// const group = new THREE.Group();
 
 //Mesh
 
@@ -23,8 +23,11 @@ const meshTwo = new THREE.Mesh(
 
 meshTwo.position.y = 2;
 
-group.add(mesh, meshTwo);
-scene.add(group);
+// group.add(mesh, meshTwo);
+// scene.add(group);
+
+scene.add(mesh);
+scene.add(meshTwo);
 
 //Camera
 
@@ -61,7 +64,8 @@ const animate = (target, interval = 100, bias = 0.01, grain = 0.01) => {
   }, interval);
 };
 
-animate(group);
+animate(mesh);
+animate(meshTwo);
 
 // //Mesh
 
