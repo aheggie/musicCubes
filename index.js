@@ -8,26 +8,20 @@ const scene = new THREE.Scene();
 
 // const group = new THREE.Group();
 
+//boxMaker
+
+const boxMaker = (color) =>
+  new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color })
+  );
+
 //Mesh
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: "#FF6F00" });
-const mesh = new THREE.Mesh(geometry, material);
-
-//MeshTwo
-
-const meshTwo = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: "#31A6FF" })
+const meshes = ["#FF6F00", "#31A6FF", "#FABBAE", "#FAADED", "#4B1DAD"].map(
+  boxMaker
 );
-
-meshTwo.position.y = 2;
-
-// group.add(mesh, meshTwo);
-// scene.add(group);
-
-scene.add(mesh);
-scene.add(meshTwo);
+meshes.forEach((mesh) => scene.add(mesh));
 
 //Camera
 
@@ -52,20 +46,25 @@ renderer.render(scene, camera);
 const animate = (target, interval = 100, bias = 0.01, grain = 0.01) => {
   const randShift = (position) => position + (0.5 - Math.random()) * grain;
 
+  let xBias = bias;
+  let yBias = bias;
+  let zBias = bias;
+
   setInterval(() => {
-    target.rotation.x = bias + randShift(target.rotation.x);
-    target.position.x = bias + randShift(target.position.x);
-    target.rotation.y = bias + randShift(target.rotation.y);
-    target.position.y = bias + randShift(target.position.y);
-    target.rotation.z = bias + randShift(target.rotation.z);
-    target.position.z = bias + randShift(target.position.z);
-    bias = randShift(bias);
+    target.rotation.x = xBias + randShift(target.rotation.x);
+    target.position.x = xBias + randShift(target.position.x);
+    target.rotation.y = yBias + randShift(target.rotation.y);
+    target.position.y = yBias + randShift(target.position.y);
+    target.rotation.z = zBias + randShift(target.rotation.z);
+    target.position.z = zBias + randShift(target.position.z);
+    xBias = randShift(xBias);
+    yBias = randShift(yBias);
+    zBias = randShift(zBias);
     renderer.render(scene, camera);
   }, interval);
 };
 
-animate(mesh);
-animate(meshTwo);
+meshes.forEach((mesh) => animate(mesh));
 
 // //Mesh
 
