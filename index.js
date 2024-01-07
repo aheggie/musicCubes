@@ -14,12 +14,12 @@ const emptyArray = (len) => [...new Array(len)];
 
 // random in range
 
-const randBetween = (start = 0, end = 255) =>
+const randBetween = (start, end) =>
   start + Math.floor(Math.random() * (end - start + 1));
 
 //boxMaker
 
-const startCoords = emptyArray(3).map((_) => randBetween(-2, 3));
+// const startCoords = emptyArray(3).map((_) => randBetween(-2, 3));
 
 const boxMaker = (color) => {
   const box = new THREE.Mesh(
@@ -27,15 +27,16 @@ const boxMaker = (color) => {
     new THREE.MeshBasicMaterial({ color })
   );
 
-  box.position.x = startCoords[0];
-  box.position.y = startCoords[1];
-  box.position.z = startCoords[2];
+  // box.position.x = startCoords[0];
+  // box.position.y = startCoords[1];
+  // box.position.z = startCoords[2];
   return box;
 };
 
 // random color
 
-const randSingleColorHex = () => randBetween().toString(16).padStart(2, "0");
+const randSingleColorHex = (start = 0, end = 255) =>
+  randBetween(start, end).toString(16).padStart(2, "0");
 
 const randHexCode = () =>
   `#${randSingleColorHex()}${randSingleColorHex()}${randSingleColorHex()}`;
@@ -61,8 +62,8 @@ const aspect = {
 };
 const camera = new THREE.PerspectiveCamera(75, aspect.width / aspect.height); //default near and far is 1, 2000
 
-// camera.position.x = 4;
-// camera.position.y = 4;
+camera.position.x = 4;
+camera.position.y = 4;
 
 camera.position.z = 10;
 scene.add(camera);
