@@ -16,11 +16,23 @@ const boxMaker = (color) =>
     new THREE.MeshBasicMaterial({ color })
   );
 
+// random color
+
+const randBetween = (start = 0, end = 255) =>
+  start + Math.floor(Math.random() * (end - start + 1));
+const randSingleColorHex = () => randBetween().toString(16).padStart(2, "0");
+
+const randHexCode = () =>
+  `#${randSingleColorHex()}${randSingleColorHex()}${randSingleColorHex()}`;
+
 //Mesh
 
-const meshes = ["#FF6F00", "#31A6FF", "#FABBAE", "#FAADED", "#4B1DAD"].map(
-  boxMaker
-);
+// const meshes = ["#FF6F00", "#31A6FF", "#FABBAE", "#FAADED", "#4B1DAD"].map(
+//   boxMaker
+// );
+
+const meshes = [randHexCode(), randHexCode(), randHexCode()].map(boxMaker);
+
 meshes.forEach((mesh) => scene.add(mesh));
 
 //Camera
