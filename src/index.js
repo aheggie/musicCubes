@@ -17,6 +17,26 @@ const emptyArray = (len) => [...new Array(len)];
 const randBetween = (start, end) =>
   start + Math.floor(Math.random() * (end - start + 1));
 
+// Fischer-Yates shuffles
+// from https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+
+const shuffle = (toShuffle) => {
+  const array = toShuffle.slice(0);
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+// shuffleTest = (amt) =>
+//   emptyArray(amt)
+//     .map(() => shuffle([1, 2, 3]))
+//     .reduce(([a, b, c], [x, y, z]) => [a + x, b + y, c + z], [0, 0, 0])
+//     .map((n) => n / amt);
+
+// console.log(shuffleTest(1000000));
+
 //boxMaker
 
 // const startCoords = emptyArray(3).map((_) => randBetween(-2, 3));
@@ -37,25 +57,21 @@ const boxMaker = (color) => {
 
 const randSingleColorHex = (start = 0, end = 255) =>
   randBetween(start, end).toString(16).padStart(2, "0");
-console.log(randSingleColorHex());
+
 const hexCode = (rHex, gHex, bHex) => `#${rHex}${gHex}${bHex}`;
-console.log(hexCode(...["af", "22", "bc"]));
 
 const randHexCode = () =>
   hexCode(...emptyArray(3).map((_) => randSingleColorHex()));
-console.log(randHexCode());
 
-const hexFuncs = [
+const hexFuncs = shuffle([
   () => randSingleColorHex(0, 50),
   () => randSingleColorHex(25, 100),
   () => randSingleColorHex(175, 255),
-].sort((_) => 0.5 - Math.random());
+]);
 
 const call = (fn) => fn();
 
 const randColorfulHexCode = () => hexCode(...hexFuncs.map(call));
-
-console.log(randColorfulHexCode());
 
 //Mesh
 
@@ -69,7 +85,7 @@ const consoleReturn = (x) => {
 };
 
 const boxArrayMaker = (nBoxes) =>
-  emptyArray(nBoxes).map(randColorfulHexCode).map(consoleReturn).map(boxMaker);
+  emptyArray(nBoxes).map(randColorfulHexCode).map(boxMaker);
 
 const meshes = boxArrayMaker(100);
 
