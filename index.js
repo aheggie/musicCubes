@@ -45,14 +45,15 @@ const randHexCode = () =>
   hexCode(...emptyArray(3).map((_) => randSingleColorHex()));
 console.log(randHexCode());
 
-const randColorfulHexCode = () =>
-  hexCode(
-    ...[
-      randSingleColorHex(0, 50),
-      randSingleColorHex(25, 100),
-      randSingleColorHex(175, 255),
-    ].sort((_) => 0.5 - Math.random())
-  );
+const hexFuncs = [
+  () => randSingleColorHex(0, 50),
+  () => randSingleColorHex(25, 100),
+  () => randSingleColorHex(175, 255),
+].sort((_) => 0.5 - Math.random());
+
+const call = (fn) => fn();
+
+const randColorfulHexCode = () => hexCode(...hexFuncs.map(call));
 
 console.log(randColorfulHexCode());
 
