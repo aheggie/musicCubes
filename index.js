@@ -45,14 +45,30 @@ const randHexCode = () =>
   hexCode(...emptyArray(3).map((_) => randSingleColorHex()));
 console.log(randHexCode());
 
+const randColorfulHexCode = () =>
+  hexCode(
+    ...[
+      randSingleColorHex(0, 50),
+      randSingleColorHex(25, 100),
+      randSingleColorHex(175, 255),
+    ].sort((_) => 0.5 - Math.random())
+  );
+
+console.log(randColorfulHexCode());
+
 //Mesh
 
 // const meshes = ["#FF6F00", "#31A6FF", "#FABBAE", "#FAADED", "#4B1DAD"].map(
 //   boxMaker
 // );
 
+const consoleReturn = (x) => {
+  console.log(x);
+  return x;
+};
+
 const boxArrayMaker = (nBoxes) =>
-  emptyArray(nBoxes).map(randHexCode).map(boxMaker);
+  emptyArray(nBoxes).map(randColorfulHexCode).map(consoleReturn).map(boxMaker);
 
 const meshes = boxArrayMaker(100);
 
@@ -66,11 +82,17 @@ const aspect = {
 };
 const camera = new THREE.PerspectiveCamera(75, aspect.width / aspect.height); //default near and far is 1, 2000
 
-camera.position.x = 4;
-camera.position.y = 4;
+camera.position.x = 5;
+camera.position.y = 1.5;
 
-camera.position.z = 10;
+camera.position.z = 8;
 scene.add(camera);
+
+// Lighting Rig
+
+const light = new THREE.AmbientLight(0x404040); // soft white light
+scene.add(light);
+
 //Renderer
 const canvas = document.querySelector(".draw");
 
